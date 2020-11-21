@@ -3,7 +3,7 @@ from graphene_django import DjangoObjectType
 from .models import User
 from .types import UserType
 from .mutations import CreateAccountMutation, LoginMutation
-from .queries import resolve_user
+from .queries import resolve_user, resolve_me
 
 
 class Query(object):
@@ -13,6 +13,7 @@ class Query(object):
         id=graphene.Int(required=True),
         resolver=resolve_user,
     )
+    me = graphene.Field(UserType, resolver=resolve_me)
 
 
 class Mutation(object):
