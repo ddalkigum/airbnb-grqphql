@@ -135,3 +135,10 @@ MEDIA_URL = "/media/"
 # Auth
 
 AUTH_USER_MODEL = "users.User"
+
+# Grapheql
+GRAPHENE = {
+    "MIDDLEWARE": [
+        "config.middlewares.JWTMiddelware",
+    ]
+}

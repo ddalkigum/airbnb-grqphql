@@ -1,4 +1,6 @@
 import graphene
+import jwt
+from django.conf import settings
 from django.contrib.auth import authenticate
 from .models import User
 
@@ -37,6 +39,7 @@ class LoginMutation(graphene.Mutation):
     def mutate(self, info, email, password):
         user = authenticate(username=email, password=password)
         if user:
-            print(user)
+            token = jwt.encode({"pk": user.pk}, settings.SECRET_KEY, algorithm="HS256")
+            return LoginMutation(token=token.decode("utf-8"), pk=user.pk)
         else:
             return LoginMutation(error="Wrong password/username")
